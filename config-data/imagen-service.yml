@@ -1,0 +1,33 @@
+server:
+  port: 8092
+  error:
+    include-message: always
+################### Mongo Configuration ##########################
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/db_practica
+      database: db_practica
+
+################### Img Configuration ##########################
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+  main:
+    allow-circular-references: true
+
+  mvc:
+    pathmatch:
+      matching-strategy : ANT_PATH_MATCHER
+
+  application:
+    name: imagen-service
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
