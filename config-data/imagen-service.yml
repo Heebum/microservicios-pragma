@@ -8,6 +8,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/db_practica
       database: db_practica
+      auto-index-creation: true
 
 ################### Img Configuration ##########################
 
