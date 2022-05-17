@@ -5,6 +5,7 @@ import com.micro.persona.domain.model.Imagen;
 import com.micro.persona.domain.model.Persona;
 import com.micro.persona.domain.repositories.PersonaRepository;
 import com.micro.persona.infrastructure.feignclients.ImagenFeignClient;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +14,12 @@ import java.util.Optional;
 public class PersonaService {
     private final PersonaRepository personaRepository;
     private final ImagenFeignClient imagenFeignClient;
+    private final RestTemplate restTemplate;
 
-    public PersonaService(PersonaRepository personaRepository, ImagenFeignClient imagenFeignClient) {
+    public PersonaService(PersonaRepository personaRepository, ImagenFeignClient imagenFeignClient, RestTemplate restTemplate) {
         this.personaRepository = personaRepository;
         this.imagenFeignClient = imagenFeignClient;
+        this.restTemplate = restTemplate;
     }
 
     public Persona findPersonaById(Long id) {
@@ -62,5 +65,10 @@ public class PersonaService {
             throw new PersonaNotFoundException(String.format("Persona con id= %s no existe",id));
         }
         return personaRepository.delete(id);
+    }
+
+    public List<Imagen> getImages(Long idPersona){
+        List<Imagen> images = restTemplate.getForObject("http://imagen-service/api/imagenMongo/bypersona/" + idPersona, List.class);
+        return images;
     }
 }

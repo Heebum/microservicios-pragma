@@ -8,7 +8,9 @@ import com.micro.persona.domain.model.Imagen;
 import com.micro.persona.domain.model.Persona;
 import com.micro.persona.domain.usecase.PersonaService;
 import com.micro.persona.infrastructure.feignclients.ImagenFeignClient;
+import com.micro.persona.infrastructure.persistence.entity.PersonaEntity;
 import com.netflix.discovery.converters.Auto;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -55,6 +58,8 @@ public class PersonaController {
             @ApiResponse(code=404, message="Not Found", response=String.class),
             @ApiResponse(code=500, message="Internal Server Error", response=String.class)
     })
+
+//    @CircuitBreaker(name = "imagenCB", fallbackMethod = "fallBackGetId")
     @GetMapping(value = "/{id}", produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> getPersonaById(@PathVariable Long id) {
         try {
@@ -72,6 +77,7 @@ public class PersonaController {
             @ApiResponse(code=404, message="Not Found", response=String.class),
             @ApiResponse(code=500, message="Internal Server Error", response=String.class)
     })
+    @CircuitBreaker(name = "allCB", fallbackMethod = "fallBackGetAll")
     @GetMapping(produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> findAllPerson(){
         try {
@@ -98,5 +104,21 @@ public class PersonaController {
     @DeleteMapping(value = "/{id}",produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> deletePerson(@PathVariable Long id){
         return new ResponseEntity<>(personaMapper.toDto(personaService.delete(id)),HttpStatus.OK);
+    }
+
+
+    @CircuitBreaker(name = "imagenCB", fallbackMethod = "fallBackGetId")
+    @GetMapping(value = "/images/{id}", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<Object> getImagens(@PathVariable Long id){
+        return new ResponseEntity<>(personaUsecase.getImagens(id),HttpStatus.OK);
+    }
+
+
+
+    private ResponseEntity<Object> fallBackGetId(@PathVariable Long id, RuntimeException e) {
+        return new ResponseEntity<>("La persona "+id+" fall back by id",HttpStatus.OK);
+    }
+    private ResponseEntity<Object> fallBackGetAll(RuntimeException e) {
+        return new ResponseEntity<>("fall back all",HttpStatus.OK);
     }
 }

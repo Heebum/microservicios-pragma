@@ -25,7 +25,7 @@ spring:
 
   mvc:
     pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
+      matching-strategy: ant_path_matcher
 
   application:
     name: persona-service
@@ -46,6 +46,15 @@ eureka:
 resilience4j.circuitbreaker:
     instances:
         imagenCB:
+            registerHealthIndicator: true
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 4
+            waitDurationInOpenState: 5s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10
+        allCB:
             registerHealthIndicator: true
             slidingWindowSize: 10
             permittedNumberOfCallsInHalfOpenState: 3

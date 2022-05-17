@@ -1,6 +1,7 @@
 package com.micro.persona.infrastructure.persistence.repository;
 
 import com.micro.persona.application.exception.PersonaNotFoundException;
+import com.micro.persona.domain.model.Imagen;
 import com.micro.persona.domain.model.Persona;
 import com.micro.persona.domain.repositories.PersonaRepository;
 import com.micro.persona.infrastructure.persistence.entity.PersonaEntity;
@@ -8,6 +9,7 @@ import com.micro.persona.infrastructure.persistence.mapper.PersonaEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,9 @@ public class DataPersonaRepositoryImpl implements PersonaRepository {
     DataPersonaRepository dataPersonaRepository;
     @Autowired
     PersonaEntityMapper personaEntityMapper;
+    @Autowired
+    RestTemplate restTemplate;
+
 
     private static final String PERSONA_NOT_FOUND = "Persona con id= %s no existe";
 
@@ -57,5 +62,10 @@ public class DataPersonaRepositoryImpl implements PersonaRepository {
         PersonaEntity persona = dataPersonaRepository.findById(id).orElseThrow( ()-> new PersonaNotFoundException(String.format(PERSONA_NOT_FOUND,id)));
         dataPersonaRepository.deleteById(id);
         return personaEntityMapper.toDomaindb(persona);
+    }
+    @Override
+    public List<Imagen> getImages(Long idPersona){
+        List<Imagen> images = restTemplate.getForObject("http://imagen-service/api/imagenMongo/bypersona/" + idPersona, List.class);
+        return images;
     }
 }

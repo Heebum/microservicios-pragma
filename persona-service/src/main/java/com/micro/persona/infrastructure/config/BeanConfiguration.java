@@ -8,12 +8,13 @@ import com.micro.persona.domain.usecase.PersonaService;
 import com.micro.persona.infrastructure.feignclients.ImagenFeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class BeanConfiguration {
     @Bean
-    public PersonaService personaService(PersonaRepository personaRepository, ImagenFeignClient imagenFeignClient){
-        return new PersonaService(personaRepository,imagenFeignClient);
+    public PersonaService personaService(PersonaRepository personaRepository, ImagenFeignClient imagenFeignClient, RestTemplate restTemplate){
+        return new PersonaService(personaRepository,imagenFeignClient, restTemplate);
     }
 
     @Bean

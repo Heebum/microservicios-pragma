@@ -40,4 +40,11 @@ public class PersonaUsecase {
 
         return dto;
     }
+
+    public List<Imagen> getImagens(Long idPersona){
+        Persona data = personaService.findPersonaById(idPersona);
+        List<Imagen> imagen = personaService.getImages(idPersona);
+        return imagen;
+    }
+
 }
