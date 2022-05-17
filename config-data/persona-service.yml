@@ -44,14 +44,12 @@ eureka:
       defaultZone: http://localhost:8099/eureka/
 
 #hystrix con feign
-#Feign:
-#  hystrix:
-#    enabled: true
-    
+Feign:
+  hystrix:
+    enabled: true
 #actuator
-#management:
-#  endpoints:
-#    web:
-#      base-path: /actuator
-#      exposure:
-#        include: "*"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
