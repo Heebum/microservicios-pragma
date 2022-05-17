@@ -43,13 +43,26 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
 
-#hystrix con feign
-Feign:
-  hystrix:
-    enabled: true
-#actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+resilience4j.circuitbreaker:
+    instances:
+        imagenCB:
+            registerHealthIndicator: true
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 4
+            waitDurationInOpenState: 5s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10
+            
+
+# #hystrix con feign
+# Feign:
+#   hystrix:
+#     enabled: true
+# #actuator
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"
