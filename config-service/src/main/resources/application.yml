@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Heebum/microservicios-pragma.git
+          #          clone-on-start: true
+          #          uri: git@github.com:Heebum/microservicios.git
+          search-paths: config-data
+          username: ${GIT_USER}
+          password: ${GIT_PASS}
+          default-label: master
+
+  security:
+    user:
+      name: root
+      password: s3cr3t
+
+  application:
+    name: config-server
+
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+
+
