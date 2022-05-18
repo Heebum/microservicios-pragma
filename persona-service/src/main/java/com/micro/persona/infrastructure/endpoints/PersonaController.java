@@ -11,9 +11,9 @@ import com.micro.persona.infrastructure.feignclients.ImagenFeignClient;
 import com.micro.persona.infrastructure.persistence.entity.PersonaEntity;
 import com.netflix.discovery.converters.Auto;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+//import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiResponse;
+//import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,24 +40,24 @@ public class PersonaController {
     @Autowired
     PersonaUsecase personaUsecase;
 
-    @ApiOperation(value="Crear nueva Persona", notes="Proporciona una operación para crear un nuevo objeto Persona y devolver su identificador")
-    @ApiResponses(value= {
-            @ApiResponse(code = 201, message = "Created", response = String.class),
-            @ApiResponse(code = 400, message = "Bad Request", response = String.class),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = String.class)
-    })
+//    @ApiOperation(value="Crear nueva Persona", notes="Proporciona una operación para crear un nuevo objeto Persona y devolver su identificador")
+//    @ApiResponses(value= {
+//            @ApiResponse(code = 201, message = "Created", response = String.class),
+//            @ApiResponse(code = 400, message = "Bad Request", response = String.class),
+//            @ApiResponse(code = 500, message = "Internal Server Error", response = String.class)
+//    })
     @PostMapping(produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> createPerson(@RequestBody PersonaEntityDto personaEntityDto){
 
         return new ResponseEntity<>(personaMapper.toDto(personaService.save(personaMapper.toDomain(personaEntityDto))), HttpStatus.CREATED);
 
     }
-    @ApiOperation(value="Obtener persona por id", notes="Proporciona una operación para obtener un objeto Persona por su identificador")
-    @ApiResponses(value={
-            @ApiResponse(code=200, message="OK", response= Persona.class),
-            @ApiResponse(code=404, message="Not Found", response=String.class),
-            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
-    })
+//    @ApiOperation(value="Obtener persona por id", notes="Proporciona una operación para obtener un objeto Persona por su identificador")
+//    @ApiResponses(value={
+//            @ApiResponse(code=200, message="OK", response= Persona.class),
+//            @ApiResponse(code=404, message="Not Found", response=String.class),
+//            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
+//    })
 
 //    @CircuitBreaker(name = "imagenCB", fallbackMethod = "fallBackGetId")
     @GetMapping(value = "/{id}", produces = "application/json; charset=UTF-8")
@@ -71,12 +71,12 @@ public class PersonaController {
         }
     }
 
-    @ApiOperation(value="Obtener todas las persona", notes="Proporciona una operación para obtener todas las Persona")
-    @ApiResponses(value={
-            @ApiResponse(code=200, message="OK", response= Persona.class),
-            @ApiResponse(code=404, message="Not Found", response=String.class),
-            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
-    })
+//    @ApiOperation(value="Obtener todas las persona", notes="Proporciona una operación para obtener todas las Persona")
+//    @ApiResponses(value={
+//            @ApiResponse(code=200, message="OK", response= Persona.class),
+//            @ApiResponse(code=404, message="Not Found", response=String.class),
+//            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
+//    })
     @CircuitBreaker(name = "allCB", fallbackMethod = "fallBackGetAll")
     @GetMapping(produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> findAllPerson(){
@@ -89,12 +89,12 @@ public class PersonaController {
         }
     }
 
-    @ApiOperation(value="Actualizar persona por id", notes="Proporciona una operación para actualizar un objeto Persona por su identificador")
-    @ApiResponses(value={
-            @ApiResponse(code=200, message="OK", response= Persona.class),
-            @ApiResponse(code=404, message="Not Found", response=String.class),
-            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
-    })
+//    @ApiOperation(value="Actualizar persona por id", notes="Proporciona una operación para actualizar un objeto Persona por su identificador")
+//    @ApiResponses(value={
+//            @ApiResponse(code=200, message="OK", response= Persona.class),
+//            @ApiResponse(code=404, message="Not Found", response=String.class),
+//            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
+//    })
     @PutMapping(value = "/{id}",produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> updatePerson(@PathVariable Long id, @RequestBody PersonaEntityDto personaEntityDto){
 
