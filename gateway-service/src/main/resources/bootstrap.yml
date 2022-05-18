@@ -9,12 +9,19 @@ spring:
       password: s3cr3t
       default-label: main
 
+      enabled: true
+
   main:
     allow-circular-references: true
 
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+eureka:
+  client:
+    fetch-registry: true
 
 logging:
   pattern:

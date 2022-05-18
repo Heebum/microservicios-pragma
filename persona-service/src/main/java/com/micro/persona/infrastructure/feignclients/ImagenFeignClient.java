@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@FeignClient(name = "imagen-service",path = "/api/imagenMongo", url = "http://localhost:8092")//  fallback = ImagenHystrixFallbackFactory.class
+@FeignClient(name = "imagen-service",path = "/api/imagenMongo")//  fallback = ImagenHystrixFallbackFactory.class  url = "http://localhost:8092"
 
 public interface ImagenFeignClient {
 
