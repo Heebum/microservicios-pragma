@@ -3,9 +3,12 @@ package com.micro.imagen.infrastructure.endpoints;
 import com.micro.imagen.application.mappers.ImagenMapper;
 import com.micro.imagen.domain.model.ImagenMongo;
 import com.micro.imagen.domain.usecase.ImagenService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+//import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiResponse;
+//import io.swagger.annotations.ApiResponses;
+
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +29,12 @@ public class ImagenController {
     @Autowired
     ImagenMapper imagenMapper;
 
-    @ApiOperation(value="Crear nueva Imagen", notes="Proporciona una operación para crear un nuevo objeto Imagen y devolver su identificador")
-    @ApiResponses(value= {
-            @ApiResponse(code = 201, message = "Created", response = String.class),
-            @ApiResponse(code = 400, message = "Bad Request", response = String.class),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = String.class)
-    })
+//    @ApiOperation(value="Crear nueva Imagen", notes="Proporciona una operación para crear un nuevo objeto Imagen y devolver su identificador")
+//    @ApiResponses(value= {
+//            @ApiResponse(responseCode = "201", description = "Created", response = String.class),
+//            @ApiResponse(code = 400, message = "Bad Request", response = String.class),
+//            @ApiResponse(code = 500, message = "Internal Server Error", response = String.class)
+//    })
     @PostMapping(produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> createImage(@RequestParam("file") MultipartFile imageFile, @RequestParam Long fk_persona){
         try {
@@ -43,12 +46,12 @@ public class ImagenController {
         }
     }
 
-    @ApiOperation(value="Obtener imagen por id", notes="Proporciona una operación para obtener un objeto Imagen por su identificador")
-    @ApiResponses(value={
-            @ApiResponse(code=200, message="OK", response= ImagenMongo.class),
-            @ApiResponse(code=404, message="Not Found", response=String.class),
-            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
-    })
+//    @ApiOperation(value="Obtener imagen por id", notes="Proporciona una operación para obtener un objeto Imagen por su identificador")
+//    @ApiResponses(value={
+//            @ApiResponse(code=200, message="OK", response= ImagenMongo.class),
+//            @ApiResponse(code=404, message="Not Found", response=String.class),
+//            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
+//    })
     @GetMapping(value = "/{id}", produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> getImagenById(@PathVariable String id){
         try {
