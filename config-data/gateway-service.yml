@@ -13,20 +13,22 @@ eureka:
     hostname: localhost
 
 spring:
+  application:
+    name: gateway-service
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
       routes:
-        -id: persona-service
+        - id: persona-service
         uri: http://localhost8080 #lb://persona-service
         predicates:
-          -Path=/api/persona/**
-        -id: imagen-service
+          - Path=/api/persona/**
+        - id: imagen-service
         uri: lb://imagen-service
         predicates:
-          -Path=/api/imagenMongo/**
+          - Path=/api/imagenMongo/**
 
 logging:
   pattern:
