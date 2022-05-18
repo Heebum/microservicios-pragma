@@ -9,7 +9,10 @@ spring:
       password: s3cr3t
       default-label: main
 
-      enabled: true
+      enabled: false
+    loadbalancer:
+      cache:
+        enabled: false
 
   main:
     allow-circular-references: true
@@ -19,9 +22,9 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-eureka:
-  client:
-    fetch-registry: true
+#eureka:
+#  client:
+#    fetch-registry: true
 
 logging:
   pattern:

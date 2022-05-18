@@ -20,7 +20,7 @@ spring:
           enabled: true
       routes:
         -id: persona-service
-        uri: lb://persona-service
+        uri: http://localhost8080 #lb://persona-service
         predicates:
           -Path=/api/persona/**
         -id: imagen-service

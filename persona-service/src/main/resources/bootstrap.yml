@@ -19,9 +19,9 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-eureka:
-  client:
-    fetch-registry: true
+#eureka:
+#  client:
+#    fetch-registry: true
 
 logging:
   pattern:
