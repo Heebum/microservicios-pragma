@@ -1,5 +1,5 @@
 server:
-  port: 8092
+  port: ${PORT:${SERVER_PORT:0}}
   error:
     include-message: always
 ################### Mongo Configuration ##########################
@@ -11,7 +11,6 @@ spring:
       auto-index-creation: true
 
 ################### Img Configuration ##########################
-
   servlet:
     multipart:
       enabled: true
@@ -35,5 +34,9 @@ logging:
 
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

@@ -1,9 +1,8 @@
 server:
-  port: 8090
+  port: ${PORT:${SERVER_PORT:0}}
   error:
     include-message: always
 ################### Mysql Configuration ##########################
-
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -40,29 +39,33 @@ logging:
 
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
-resilience4j.circuitbreaker:
-    instances:
-        imagenCB:
-            registerHealthIndicator: true
-            slidingWindowSize: 10
-            permittedNumberOfCallsInHalfOpenState: 3
-            slidingWindowType: TIME_BASED
-            minimumNumberOfCalls: 4
-            waitDurationInOpenState: 5s
-            failureRateThreshold: 50
-            eventConsumerBufferSize: 10
-        allCB:
-            registerHealthIndicator: true
-            slidingWindowSize: 10
-            permittedNumberOfCallsInHalfOpenState: 3
-            slidingWindowType: TIME_BASED
-            minimumNumberOfCalls: 4
-            waitDurationInOpenState: 5s
-            failureRateThreshold: 50
-            eventConsumerBufferSize: 10
+# resilience4j.circuitbreaker:
+#     instances:
+#         imagenCB:
+#             registerHealthIndicator: true
+#             slidingWindowSize: 10
+#             permittedNumberOfCallsInHalfOpenState: 3
+#             slidingWindowType: TIME_BASED
+#             minimumNumberOfCalls: 4
+#             waitDurationInOpenState: 5s
+#             failureRateThreshold: 50
+#             eventConsumerBufferSize: 10
+#         allCB:
+#             registerHealthIndicator: true
+#             slidingWindowSize: 10
+#             permittedNumberOfCallsInHalfOpenState: 3
+#             slidingWindowType: TIME_BASED
+#             minimumNumberOfCalls: 4
+#             waitDurationInOpenState: 5s
+#             failureRateThreshold: 50
+#             eventConsumerBufferSize: 10
             
 
 # #hystrix con feign
