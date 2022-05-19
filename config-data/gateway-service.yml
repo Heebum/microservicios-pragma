@@ -22,14 +22,14 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: persona-service
+        -id: persona-service
         uri: http://localhost8080 #lb://persona-service
         predicates:
-          - Path=/api/persona/**
-        - id: imagen-service
-        uri: lb://imagen-service
+          -Path=/api/persona/**
+        -id: imagen-service
+        uri: http://localhost8080 #lb://imagen-service
         predicates:
-          - Path=/api/imagenMongo/**
+          -Path=/api/imagenMongo/**
 
 logging:
   pattern:
