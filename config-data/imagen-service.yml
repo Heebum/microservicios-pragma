@@ -27,6 +27,7 @@ spring:
 
   application:
     name: imagen-service
+    zipkin: http://localhost:9411
 
 logging:
   pattern:

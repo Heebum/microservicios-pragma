@@ -8,7 +8,9 @@ import com.micro.persona.domain.repositories.ImagenFeignService;
 import com.micro.persona.domain.usecase.PersonaService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PersonaUsecase {
     private final PersonaService personaService;
@@ -45,6 +47,23 @@ public class PersonaUsecase {
         Persona data = personaService.findPersonaById(idPersona);
         List<Imagen> imagen = personaService.getImages(idPersona);
         return imagen;
+    }
+
+    public Map<String, Object> getPersonaImagens(Long idPersona){
+        Map<String,Object> result = new HashMap<>();
+        Persona data = personaService.findPersonaById(idPersona);
+        if (data == null){
+            result.put("Mensaje", "No existe el usuario");
+            return result;
+        }
+        result.put("Persona", data);
+        List<Imagen> imagen = imagenFeignService.getByUserId(idPersona);
+        if (imagen.isEmpty()){
+            result.put("Imagenes", "esa persona no tiene imagenes");
+        }else{
+            result.put("Imagenes", imagen);
+        }
+        return result;
     }
 
 }

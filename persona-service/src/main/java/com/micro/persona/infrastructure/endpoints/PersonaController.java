@@ -4,16 +4,9 @@ import com.micro.persona.application.dto.PersonaEntityDto;
 import com.micro.persona.application.exception.PersonaNotFoundException;
 import com.micro.persona.application.mappers.PersonaMapper;
 import com.micro.persona.application.usecase.PersonaUsecase;
-import com.micro.persona.domain.model.Imagen;
-import com.micro.persona.domain.model.Persona;
 import com.micro.persona.domain.usecase.PersonaService;
 import com.micro.persona.infrastructure.feignclients.ImagenFeignClient;
-import com.micro.persona.infrastructure.persistence.entity.PersonaEntity;
-import com.netflix.discovery.converters.Auto;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-//import io.swagger.annotations.ApiOperation;
-//import io.swagger.annotations.ApiResponse;
-//import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,8 +70,8 @@ public class PersonaController {
 //            @ApiResponse(code=404, message="Not Found", response=String.class),
 //            @ApiResponse(code=500, message="Internal Server Error", response=String.class)
 //    })
-    @CircuitBreaker(name = "allCB", fallbackMethod = "fallBackGetAll")
-    @GetMapping(produces = "application/json; charset=UTF-8")
+
+    @GetMapping(value = "/allPersona", produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> findAllPerson(){
         try {
             return new ResponseEntity<>(personaUsecase.getAll(),HttpStatus.OK);
@@ -112,13 +105,16 @@ public class PersonaController {
     public ResponseEntity<Object> getImagens(@PathVariable Long id){
         return new ResponseEntity<>(personaUsecase.getImagens(id),HttpStatus.OK);
     }
-
-
+    @CircuitBreaker(name = "allCB", fallbackMethod = "fallBackGetAll")
+    @GetMapping(value = "/getall/{id}", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<Object> getAllImages(@PathVariable Long id){
+        return new ResponseEntity<>(personaUsecase.getPersonaImagens(id),HttpStatus.OK);
+    }
 
     private ResponseEntity<Object> fallBackGetId(@PathVariable Long id, RuntimeException e) {
-        return new ResponseEntity<>("La persona "+id+" fall back by id",HttpStatus.OK);
+        return new ResponseEntity<>("La persona "+id+" no tiene imagenes",HttpStatus.OK);
     }
-    private ResponseEntity<Object> fallBackGetAll(RuntimeException e) {
-        return new ResponseEntity<>("fall back all",HttpStatus.OK);
+    private ResponseEntity<Object> fallBackGetAll(@PathVariable Long id, RuntimeException e) {
+        return new ResponseEntity<>("La persona "+id+" no tiene imagenes",HttpStatus.OK);
     }
 }
