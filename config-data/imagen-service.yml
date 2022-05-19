@@ -48,3 +48,14 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+error: 
+  whitelabel:
+    enabled: false
+
+#actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
