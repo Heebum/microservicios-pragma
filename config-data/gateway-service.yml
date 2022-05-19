@@ -5,8 +5,6 @@ server:
 
 eureka:
   client:
-    registerWithEureka: false
-    fetchRegistry: false
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   instance:
@@ -22,14 +20,16 @@ spring:
         locator:
           enabled: true
       routes:
-        -id: persona-service
-        uri: http://localhost8080 #lb://persona-service
-        predicates:
-          -Path=/api/persona/**
-        -id: imagen-service
-        uri: http://localhost8080 #lb://imagen-service
-        predicates:
-          -Path=/api/imagenMongo/**
+        - id: persona-service        
+          predicates:
+          - Path=/api/persona/**
+          uri: lb://persona-service #http://localhost8080
+
+        - id: imagen-service        
+          predicates:
+          - Path=/api/imagenMongo/**
+          uri: lb://imagen-service #http://localhost8080
+        
 
 logging:
   pattern:

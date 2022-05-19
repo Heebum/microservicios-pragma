@@ -8,7 +8,7 @@ spring:
       username: root
       password: s3cr3t
       default-label: main
-#      enabled: true
+      enabled: true
 
 
 logging:

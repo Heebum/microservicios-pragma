@@ -9,7 +9,7 @@ spring:
       password: s3cr3t
       default-label: main
 
-      enabled: false
+      enabled: true
     loadbalancer:
       cache:
         enabled: false
